@@ -16,7 +16,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter setFilter={setFilter} />
       <h2>add a new</h2>
-      <PersonForm addPerson={addPerson} />
+      <PersonForm addPerson={addPerson} fields={["name","number"]} />
       <h2>Numbers</h2>
       <Persons persons={persons} />
     </div>
