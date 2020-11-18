@@ -10,9 +10,10 @@ function App() {
   const [error , setError ] = useState(false)
   const [data, setData] = useState([]);
   const [touched , setTouched ] =useState(false)
+  
   const searchCountry = ({ target: { value } }) => {
     setCountry(value);
-    
+
     if (!value){
       setTouched(false)
     }
