@@ -9,10 +9,10 @@ const ShowCountry = ( {touched, error , data }) =>{
         return <h2> invalid request </h2>
     }
     if (data.length === 1 ){
-        return <Country {...data[0]}/>
+        return <Country show {...data[0]}/>
     }
     if (data.length){
-        return data && data.map((country,i) => <h3>{country.name}</h3>)
+        return data && data.map((country,i) => <Country key={i}  {...country}/> )
     }
     return <h2>too many matches, specify another filter</h2>
    }
