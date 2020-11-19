@@ -1,43 +1,68 @@
 import { useEffect, useState } from "react";
-import { setId } from "../helper";
-import { getAll } from "../services/data";
+import * as personService from "../services/data";
+import { v4 } from "uuid";
 
-
- const useData = (initialize = [] ) => {
+const useData = (initialize = []) => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("");
-  const [error , setError ] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    getAll().then(({data }) =>{
-      addAll(data.map(setId))
-    })
-    .catch(error =>setError(error.message) )
-    
-  },[] )
+    personService
+      .getAll()
+      .then(({ data }) => {
+        addAll(data);
+      })
+      .catch((error) => setError(error.message));
+  }, []);
 
+  let persons = data;
 
-  let persons = data
- 
   if (filter) {
     const pattern = RegExp(filter, "i");
     persons = data.filter((item) => pattern.test(item.name));
   } else {
     persons = data;
   }
+  
+  const replace = (id, newPerson) => {
+    setData((data) =>
+      data.map((person) =>
+        person.id === id  ? newPerson : person
+      )
+    );
+    personService.updateOne(id , newPerson);
+  };
 
-  const addAll = (array) => setData(data => [...data,...array])
-
-  const addPerson = ({ name, number }) => {
+  const addAll = (array) => setData((data) => [...data, ...array]);
+   
+  const addPerson = async ({ name, number }) => {
     if (data.find((person) => person.name === name)) {
-      alert(`${name} is already added to the phonebook`);
+      if (
+        window.confirm(
+          `${name} is already added to the phonebook, replace the old number with the new one ?`
+        )
+      ) {
+        const person =  data.find(person => person.name === name)
+        replace(person.id , {...person,number} );
+      }
+     
     } else {
-      setData((data) => [...data, { name, number,id : setId() }]);
+      const response = await personService.addOne({
+        name,
+        number,
+        id: v4(),
+      });
+      setData((data) => [...data, response.data]);
     }
   };
-   
-  return { error , persons, addPerson, setFilter };
+
+  const deletePerson = (id) => {
+    setData(data.filter((person) => person.id !== id));
+    personService.deleteOne(id);
+  };
+
+  return { error, persons, addPerson, setFilter, deletePerson };
 };
 
-
-export default useData
+export default useData;
