@@ -1,18 +1,19 @@
 import React  from "react";
 import useField from "../hooks/useFields";
 
-const Form = ({ submit }) => {
-  const nameField = useField();
-  const numberField = useField();
-
+const Form = ({notify , submit }) => {
+  const {reset : resetName , ...nameField }= useField();
+  const {reset : resetNumber , ...numberField} = useField();
+ 
   const reset = () => {
-    nameField.reset()
-    numberField.reset()
+    resetName()
+    resetNumber()
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     submit({ name: nameField.value, number: numberField.value });
+    notify({type:"success",message:`Added ${nameField.value}`})
     reset()
   };
 

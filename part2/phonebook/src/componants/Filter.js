@@ -2,7 +2,7 @@ import React from "react";
 import useField from "../hooks/useFields";
 
 const Filter = ({ setFilter }) => {
-  const filterField = useField();
+  const {reset , ...filterField} = useField();
   const updateField = {
     ...filterField,
     onChange: (event) => {

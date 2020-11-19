@@ -1,18 +1,19 @@
 import React from "react";
-const Persons = ({ deletePerson, persons }) => (
+const Persons = ({ notify ,deletePerson, persons }) => (
   <div>
     {persons.map((person) => (
-      <Person key={person.id} {...person} deletePerson={deletePerson} />
+      <Person notify={notify} key={person.id} {...person} deletePerson={deletePerson} />
     ))}
   </div>
 );
 
-const Person = ({ id, name, number, deletePerson }) => (
+const Person = ({ notify , id, name, number, deletePerson }) => (
   <div key={id}>
     {name} {number}
     <button
       onClick={() => {
         if (window.confirm(`delete ${name} ?`)) {
+         
           deletePerson(id);
         }
       }}
