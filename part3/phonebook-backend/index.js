@@ -11,13 +11,14 @@ const personsRouter = require("./controller/persons")
 
 const app = express();
 
-const port = 3001;
-
+const  {PORT  } = require('./config')
+ 
 
 
 app.use(express.json());
 
 app.use(morgan("log"));
+app.use(express.static("build"))
 
 app.use("/api/persons", personsRouter);
 
@@ -36,4 +37,4 @@ app.use((err, req, resp,next) => {
   resp.status(200).send(err);
 });
 
-app.listen(port, () => console.log("listen on port 3001"));
+app.listen(PORT, () => console.log("listen on port 3001"));
