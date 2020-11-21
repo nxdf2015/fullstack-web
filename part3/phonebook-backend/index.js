@@ -18,6 +18,7 @@ const  {PORT  } = require('./config')
 app.use(express.json());
 
 app.use(morgan("log"));
+
 app.use(express.static("build"))
 
 app.use("/api/persons", personsRouter);
