@@ -9,7 +9,7 @@ const Persons = ({ notify ,deletePerson, persons }) => (
 
 const Person = ({ notify , id, name, number, deletePerson }) => (
   <div key={id}>
-    {name} {number}
+    {name} {number} {id}
     <button
       onClick={() => {
         if (window.confirm(`delete ${name} ?`)) {

@@ -42,6 +42,7 @@ const useData = (initialize = []) => {
         )
       ) {
         const person = data.find((person) => person.name === name);
+       
         replace(person.id, { ...person, number });
       }
     } else {

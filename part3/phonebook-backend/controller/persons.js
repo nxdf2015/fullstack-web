@@ -1,5 +1,5 @@
 const express = require("express")
-
+require("express-async-errors")
 const router = express.Router();
 
 // const servicePerson = require("../service/data")
@@ -23,11 +23,17 @@ router.get("/:id", (req, resp) => {
   resp.status(200).json(person);
 });
 
+router.put("/:id", async (req,resp)=>{
+  const id = req.params.id   
+  const response = await servicePerson.updateOne(id,req.body)
 
-router.delete("/:id", (req, resp) => {
-  const id = parseInt(req.params.id);
-  const person = servicePerson.findById(id)
-  servicePerson.deleteOne(id)
+  resp.status(200).status(200).json(response)
+})
+
+router.delete("/:id", async (req, resp) => {
+  const id = req.params.id;
+
+  const person = await servicePerson.deleteOne(id)
 
   resp.status(200).json(person);
 });

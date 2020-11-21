@@ -37,7 +37,7 @@ app.use((req, resp) => {
 });
 
 app.use((err, req, resp,next) => {
-  resp.status(200).send(err);
+  resp.status(200).send(err.message);
 });
 
 app.listen(PORT, () => console.log("listen on port 3001"));

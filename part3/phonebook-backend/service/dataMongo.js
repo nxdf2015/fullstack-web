@@ -6,19 +6,13 @@ const { Person } = require("../model");
 const addOne =  (person ) =>  new Person(person).save()
    
 
-const getAll = async () => {
-  const response = await Person.find({});
-  return response
-};
+const getAll = async () =>  Person.find({});
+  
+ 
+const findById = (id) => Person.findOne({id})
 
-getCount = async () => {
-  const count = await Person.find({}).estimatedDocumentCount()
-  return response 
-}
+const deleteOne = (id) =>  Person.findByIdAndDelete(id)
+ 
+const updateOne = (id,person) =>  Person.findByIdAndUpdate(id  ,person , {new : true})
 
-// const findById = (id) => persons.find((p) => p.id === id);
-
-// const deleteOne = (id) => (persons = persons.filter((p) => p.id !== id));
-
-
-module.exports = {getAll  , addOne  }
+module.exports = {getAll  , addOne  ,findById, deleteOne ,updateOne} 
