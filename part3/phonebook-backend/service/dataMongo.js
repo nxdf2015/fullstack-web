@@ -11,9 +11,14 @@ const getAll = async () => {
   return response
 };
 
+getCount = async () => {
+  const count = await Person.find({}).estimatedDocumentCount()
+  return response 
+}
+
 // const findById = (id) => persons.find((p) => p.id === id);
 
 // const deleteOne = (id) => (persons = persons.filter((p) => p.id !== id));
 
 
-module.exports = {getAll ,addOne  }
+module.exports = {getAll  , addOne  }

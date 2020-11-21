@@ -2,15 +2,15 @@ const express = require("express")
 
 const router = express.Router();
 
-const servicePerson = require("../service/data")
-
+// const servicePerson = require("../service/data")
+const servicePerson = require("../service/dataMongo")
 
 const {validate} = require('../middleware/validation')
 
  
-const {persons } = require("../db")
-router.get("/", (req, resp) => {
-    const persons = servicePerson.getAll()
+//const {persons } = require("../db")
+router.get("/", async (req, resp) => {
+    const persons = await servicePerson.getAll()
   return resp.json(persons);
 });
 
