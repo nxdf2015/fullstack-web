@@ -2,7 +2,7 @@ import React from "react";
 const Persons = ({ notify ,deletePerson, persons }) => (
   <div>
     {persons.map((person) => (
-      <Person notify={notify} key={person.id} {...person} deletePerson={deletePerson} />
+      <Person key={person.id} {...person} deletePerson={deletePerson} />
     ))}
   </div>
 );

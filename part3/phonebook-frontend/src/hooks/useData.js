@@ -2,18 +2,25 @@ import { useEffect, useState } from "react";
 import * as personService from "../services/data";
 import { v4 } from "uuid";
 
+
 const useData = (initialize = []) => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("");
-  const [error, setError] = useState(false);
-
+  const [notification, setNotification] = useState({});
+  
+  const successNotification = message => setNotification({type : "success" , message , id : v4()})
+  const errorNotification = message => setNotification({type : "error" , message , id : v4()})
+  
   useEffect(() => {
     personService
       .getAll()
       .then(({ data }) => {
         addAll(data);
       })
-      .catch((error) => setError(error.message));
+      .catch((error) => {
+        errorNotification(error.message)
+         
+      });
   }, []);
 
   let persons = data;
@@ -26,50 +33,63 @@ const useData = (initialize = []) => {
   }
 
   const replace = (id, newPerson) => {
-    setData((data) =>
-      data.map((person) => (person.id === id ? newPerson : person))
-    );
-    personService.updateOne(id, newPerson);
+    try {
+      setData((data) =>
+        data.map((person) => (person.id === id ? newPerson : person))
+      );
+      personService.updateOne(id, newPerson);
+    } catch (error) {
+      errorNotification(error.message)
+    }
   };
 
   const addAll = (array) => setData((data) => [...data, ...array]);
-  
-  const addPerson = async ({ name, number }) => {
-    try{
 
-      if (data.find((person) => person.name === name)) {
-        if (
-          window.confirm(
-            `${name} is already added to the phonebook, replace the old number with the new one ?`
-          )
-        ) {
-          const person = data.find((person) => person.name === name);
+  const addPerson = async ({ name, number }) => {
+    console.log(data)
+    if (data.find((person) => person.name === name)) {
+      if (
+        window.confirm(
+          `${name} is already added to the phonebook, replace the old number with the new one ?`
+        )
+      ) {
+        const person = data.find((person) => person.name === name);
+
+        replace(person.id, { ...person, number });
+        
+        successNotification(`update ${name} `)
          
-          replace(person.id, { ...person, number });
-        }
-      } else {
+      }
+    } else {
+      try {
         const response = await personService.addOne({
           name,
           number,
           id: v4(),
         });
+
         setData((data) => [...data, response.data]);
+        successNotification(`Added ${name}`)
+      } catch (error) {
+        
+        errorNotification(error.message)
       }
-    }
-    catch(error){
-      setError(JSON.stringify(error))
     }
   };
 
   const deletePerson = (id) => {
-    const person = data.find(p =>p.id === id)
-    personService
-      .deleteOne(id)
-      .catch((error) => setError(`${person.name} has already been removed from server`));
-      setData(data.filter((person) => person.id !== id))
+    const person = data.find((p) => p.id === id);
+    personService.deleteOne(id).catch((error) => {
+      setNotification({
+        type: "danger",
+        message: `${person.name} has already been removed from server`,
+      });
+      errorNotification(`${person.name} has already been removed from server`);
+    });
+    setData(data.filter((person) => person.id !== id));
   };
 
-  return { error, persons, addPerson, setFilter, deletePerson };
+  return {   persons, addPerson, setFilter, deletePerson, notification };
 };
 
 export default useData;

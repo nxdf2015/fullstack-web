@@ -4,9 +4,11 @@ const Notification = (props) => {
   const [visible, setVisible] = useState(props.visible);
   useEffect(() => {
     setVisible(true);
-  }, [props.message]);
+  }, [props.id]);
 
-  setTimeout(() => setVisible(false), 2000);
+  setTimeout(() => {
+   
+    setVisible(false)}, 2000);
   if (!visible) return null;
   return (
     visible && (

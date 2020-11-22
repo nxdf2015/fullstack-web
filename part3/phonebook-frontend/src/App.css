@@ -23,7 +23,7 @@
     color : var(--color);
 }
 
-.danger {
+.error {
     --color :var(--danger);
     --bg : var(--bg-danger);
 }

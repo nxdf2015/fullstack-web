@@ -2,27 +2,31 @@
 
 const errorMiddleware = ({errors}, req, resp,next) => {
      
-    let response = {}
+    let message = ""
+    let type = ""
+    
     if (errors.name){
-       response.name = {
-            name:errors.name.name,
-            properties: errors.name.properties
-
-        }
+        
+        message += errors.name.message
+        type = errors.name.name
+         
     }
 
     if (errors.number) {
-        response.number = {
-            name:errors.number.name,
-            properties: errors.number.properties
+        if (message)
+         message += ","
+        message += errors.number.message
+        type = errors.number.name
+    }
+    console.log(message)
+    
+    if (errors.message){
+        message = errors.message
+        type = "error"
+    }
 
-        }
-    }
-    if (!Object.keys(response)){
-        response = error.name
-    }
      
-    resp.status(200).json(response );
+    resp.status(400).json({  type, message} );
   }
 
 
