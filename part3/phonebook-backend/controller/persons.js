@@ -1,5 +1,5 @@
 const express = require("express")
-require("express-async-errors")
+
 const router = express.Router();
 
 // const servicePerson = require("../service/data")
@@ -11,13 +11,13 @@ const {validate} = require('../middleware/validation')
 //const {persons } = require("../db")
 router.get("/", async (req, resp) => {
     const persons = await servicePerson.getAll()
+    
   return resp.json(persons);
 });
 
 
 router.get("/:id", (req, resp) => {
   const id = parseInt(req.params.id);
-
   const person = servicePerson.findById(id)
 
   resp.status(200).json(person);
@@ -32,17 +32,16 @@ router.put("/:id", async (req,resp)=>{
 
 router.delete("/:id", async (req, resp) => {
   const id = req.params.id;
-
   const person = await servicePerson.deleteOne(id)
 
   resp.status(200).json(person);
 });
 
-router.post("/" ,   (req, resp) => {
+router.post("/" ,   async (req, resp) => {
   const person = req.body
-  servicePerson.addOne(person)
+  const response = await servicePerson.addOne(person)
 
-  resp.status(200).json(person)
+  resp.status(200).json(response)
 });
 
 

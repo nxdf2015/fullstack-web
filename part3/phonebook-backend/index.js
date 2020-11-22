@@ -1,6 +1,8 @@
 const { response } = require("express");
 const express = require("express");
+const errorMiddleware = require("./middleware/error")
 const cors = require("cors")
+require("express-async-errors")
 
 const morgan = require("./log");
 
@@ -36,8 +38,6 @@ app.use((req, resp) => {
   resp.status(404).send("page not found");
 });
 
-app.use((err, req, resp,next) => {
-  resp.status(200).send(err.message);
-});
+app.use(errorMiddleware);
 
 app.listen(PORT, () => console.log("listen on port 3001"));

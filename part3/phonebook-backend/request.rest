@@ -8,7 +8,7 @@ get http://localhost:3001/api/persons/3
 put http://localhost:3001/api/persons/5fb85f00f924523fe45e7eec
 Content-Type: application/json 
 
-{ "name" : "test" , "number" : 2 }
+{ "name" : "test" , "number" : 3 }
 
 
 ####

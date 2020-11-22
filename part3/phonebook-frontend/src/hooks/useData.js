@@ -33,25 +33,31 @@ const useData = (initialize = []) => {
   };
 
   const addAll = (array) => setData((data) => [...data, ...array]);
-
+  
   const addPerson = async ({ name, number }) => {
-    if (data.find((person) => person.name === name)) {
-      if (
-        window.confirm(
-          `${name} is already added to the phonebook, replace the old number with the new one ?`
-        )
-      ) {
-        const person = data.find((person) => person.name === name);
-       
-        replace(person.id, { ...person, number });
+    try{
+
+      if (data.find((person) => person.name === name)) {
+        if (
+          window.confirm(
+            `${name} is already added to the phonebook, replace the old number with the new one ?`
+          )
+        ) {
+          const person = data.find((person) => person.name === name);
+         
+          replace(person.id, { ...person, number });
+        }
+      } else {
+        const response = await personService.addOne({
+          name,
+          number,
+          id: v4(),
+        });
+        setData((data) => [...data, response.data]);
       }
-    } else {
-      const response = await personService.addOne({
-        name,
-        number,
-        id: v4(),
-      });
-      setData((data) => [...data, response.data]);
+    }
+    catch(error){
+      setError(JSON.stringify(error))
     }
   };
 
