@@ -46,7 +46,7 @@ const useData = (initialize = []) => {
   const addAll = (array) => setData((data) => [...data, ...array]);
 
   const addPerson = async ({ name, number }) => {
-    console.log(data)
+    
     if (data.find((person) => person.name === name)) {
       if (
         window.confirm(
