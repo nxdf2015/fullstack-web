@@ -6,4 +6,20 @@ get http://localhost:3003/api/blogs
 post http://localhost:3003/api/blogs
 Content-Type: application/json
 
-{"title": "xavier" , "author" : "test"}
+ {"title": "Type wars",
+    "author": "Robert C. Martin",
+   "url": "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+    "likes": 2}
+
+
+####
+
+get http://localhost:3003/api/blogs/5f9f440e1575460e3400375d
+
+
+####
+
+patch http://localhost:3003/api/blogs/5f9f440e1575460e3400375d
+Content-Type: application/json
+
+{"likes" : 1}

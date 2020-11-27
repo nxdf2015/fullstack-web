@@ -1,7 +1,8 @@
 require('dotenv').config()
 
 
-const { PASSWORD , PORT } = process.env
+const { PASSWORD , PORT , NODE_ENV ,SALT,SECRET} = process.env
 
+ 
 
-module.exports = { PASSWORD ,PORT }
+module.exports = { PASSWORD ,PORT,NODE_ENV,SALT,SECRET}

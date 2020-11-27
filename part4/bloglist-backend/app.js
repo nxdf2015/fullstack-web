@@ -1,26 +1,36 @@
-const mongoose = require('mongoose')
+const monggose = require('mongoose')
 const express = require('express')
+require("express-async-errors")
 const cors = require('cors')
+const morgan = require("morgan")
+
+const {extractToken   } = require("./middleware/token")
+
+require('./utils/configDB')
+
+const errorMiddleware = require("./middleware/error")
 
 const blogController = require('./controller/blog')
-const { PASSWORD } = require('./utils/config')
-
-
-const url_db = `mongodb+srv://admin:${PASSWORD}@cluster0.llwdf.mongodb.net/<dbname>?retryWrites=true&w=majority`
-
-
-
-mongoose.connect(url_db,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+const userController = require("./controller/user")
+const loginController = require("./controller/login")
 
 const app = express()
 
+morgan.token('body' , function(req,res) {
+    
+   return JSON.stringify(req.body || "")
+})
 
 
-
-
+app.use(morgan(":method :url :status :body"))
 app.use(cors())
 app.use(express.json())
+ app.use(extractToken )
+ 
 
-app.use(blogController)
+app.use("/api/blogs" , blogController)
+app.use("/api/users", userController)
+app.use("/api/login",loginController)
 
+app.use(errorMiddleware)
 module.exports=app

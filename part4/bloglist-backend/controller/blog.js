@@ -1,26 +1,71 @@
 
 const express = require('express')
+const { request } = require('../app')
 const router = express.Router()
+ 
 
+const blogServices = require("../services/blogs")
+const { authorization  } = require('../middleware/token')
 
-const { Blog } = require('../models/blog')
+router.get('/:id', async (request, response) => {
+  const id = request.params.id
+  const blog  = await blogServices.getOne(id)
+  
 
-router.get('/api/blogs', (request, response) => {
-  Blog
-    .find({})
-    .then(blogs => {
-      response.json(blogs)
-    })
+  response.json(blog)
 })
 
-router.post('/api/blogs', (request, response) => {
-  const blog = new Blog(request.body)
+router.get('/', async (request, response) => {
+  const blogs  = await blogServices.getAll()
+ 
+  response.json(blogs)
+})
+ 
 
-  blog
-    .save()
-    .then(result => {
-      response.status(201).json(result)
-    })
+
+router.post('/' , authorization ,  async  (request, response) => {
+  const data = request.body
+
+  const blog = await blogServices.create({...data,user : request.token.id })
+
+  response.status(200).json(blog)
+  
+})
+
+router.delete("/:id",authorization , async (request,response) => {
+   const id = request.params.id
+   const blog = await blogServices.deleteOne(id)
+   
+   response.status(200).json(blog)
+
+})
+
+router.patch("/:id",authorization , async (request,response) => {
+  const {likes} = request.body
+  const id = request.params.id 
+ 
+  const blog = await blogServices.updateOne(id,likes)
+
+  response.status(200).json(blog)
+
+})
+
+router.use((err,req,resp)=> {
+  const errors= err.errors
+  let result
+  if (errors){
+        if(errors.title){
+            result = [...result ,   errors.title.message]
+        }
+        if(errors.url){
+            result = [...result , errors.url.message]
+        }}
+
+  else {
+    result = [err.message]
+  }
+
+  resp.status(400).json(result)
 })
 
 

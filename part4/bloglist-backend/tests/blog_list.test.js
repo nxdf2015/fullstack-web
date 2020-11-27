@@ -1,6 +1,7 @@
 const {} = require("jest");
-const blogs = require("./data");
-const helper = require("./list_helper");
+
+const blogs = require("../data")
+const helper = require("../list_helper");
 
 test("dummy always return 1", function () {
   expect(helper.dummy()).toBe(1);

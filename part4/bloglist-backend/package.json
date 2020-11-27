@@ -4,23 +4,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose",
+    "test": "cross-env NODE_ENV=TEST jest --verbose",
     "lint": "eslint . ",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "cross-env NODE_ENV=DEVELOPMENT nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.10.15"
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.15",
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
     "jest": "^26.6.3",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "supertest": "^6.0.1"
   },
   "jest": {
     "testEnvironment": "node"
