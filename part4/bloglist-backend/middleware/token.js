@@ -1,3 +1,4 @@
+const { response } = require("express");
 const jwt = require("jsonwebtoken");
 
 const { SECRET } = require("../utils/config");
@@ -16,7 +17,8 @@ const extractToken = (req, res, next) => {
 
 const authorization = (req, res, next) => {
   if (!req.token) {
-    throw new Error("not logged");
+    res.status(401).end()
+   // throw new Error("not logged");
   } else {
     next();
   }

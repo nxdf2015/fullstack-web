@@ -3,6 +3,7 @@ const express = require('express')
 require("express-async-errors")
 const cors = require('cors')
 const morgan = require("morgan")
+const { NODE_ENV} = require("dotenv")
 
 const {extractToken   } = require("./middleware/token")
 
@@ -17,12 +18,14 @@ const loginController = require("./controller/login")
 const app = express()
 
 morgan.token('body' , function(req,res) {
-    
-   return JSON.stringify(req.body || "")
+
+   if (Object.keys(req.body).length )
+      return JSON.stringify(req.body || "")
 })
 
-
-app.use(morgan(":method :url :status :body"))
+if (NODE_ENV == "DEVELOPMENT")
+   app.use(morgan(":method :url :status :body"))
+   
 app.use(cors())
 app.use(express.json())
  app.use(extractToken )

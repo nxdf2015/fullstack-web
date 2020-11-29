@@ -9,14 +9,14 @@ const { authorization  } = require('../middleware/token')
 
 router.get('/:id', async (request, response) => {
   const id = request.params.id
-  const blog  = await blogServices.getOne(id)
+  const blog  = await blogServices.getOne(id).populate('user')
   
 
   response.json(blog)
 })
 
 router.get('/', async (request, response) => {
-  const blogs  = await blogServices.getAll()
+  const blogs  = await blogServices.getAll().populate('user')
  
   response.json(blogs)
 })
@@ -34,7 +34,8 @@ router.post('/' , authorization ,  async  (request, response) => {
 
 router.delete("/:id",authorization , async (request,response) => {
    const id = request.params.id
-   const blog = await blogServices.deleteOne(id)
+   const user_id = request.token.id
+   const blog = await blogServices.deleteOne(id,user_id)
    
    response.status(200).json(blog)
 
