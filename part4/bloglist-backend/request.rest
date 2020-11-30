@@ -23,3 +23,4 @@ patch http://localhost:3003/api/blogs/5f9f440e1575460e3400375d
 Content-Type: application/json
 
 {"likes" : 1}
+

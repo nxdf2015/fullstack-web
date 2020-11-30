@@ -11,8 +11,9 @@ const router = express.Router();
  
 
 router.get("/me", (req, resp) => {
+   
   if (req.token){
-      resp.status(200).json({username : token.username})
+      resp.status(200).json({username : req.token.username})
   }
   else {
       throw new Error("not logged")

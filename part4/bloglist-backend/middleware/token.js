@@ -7,6 +7,7 @@ const extractToken = (req, res, next) => {
   if (req.headers.authorization) {
     const token = req.headers.authorization.slice(7);
     jwt.verify(token, SECRET, (err, decodeToken) => {
+    
       if (!err) {
         req.token = decodeToken;
       }
