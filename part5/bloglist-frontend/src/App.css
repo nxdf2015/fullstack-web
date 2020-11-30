@@ -1,0 +1,17 @@
+.notification {
+  background : rgb(224, 218, 218);
+  padding: 1.2rem;
+  font-size: 1.3rem;
+  font-family: sans-serif ;
+  font-weight : 700;
+  margin: 0.5rem 0;
+}
+
+.error {
+  color: red;
+  border: 3px solid red;
+}
+.success {
+  color: green;
+  border: 3px solid green;
+}
