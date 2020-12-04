@@ -3,32 +3,20 @@ import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import serviceBlog from "../services/blogs";
+ 
 const validationSchema = yup.object().shape({
   title: yup.string().required("title required"),
   author: yup.string().required("author required"),
   url: yup.string().required("url required").url("should be a valid url"),
 });
 
-const Add = ({ logged, setUpdate, notify, setVisible }) => {
+const Add = ({ logged, setUpdate, notify, setVisible, submit : submitProps  }) => {
 
-  
-  const submit = async (values) => {
-    const blog = await serviceBlog.addOne(values);
-    if (blog) {
-      notify({
-        type: "success",
-        message: `a new blog ${blog.title} by ${blog.author} added`,
-      });
-      setUpdate(true);
-    } else {
-      notify({
-        type: "error",
-        message: " error creation blog",
-      });
-    }
-    setVisible(false);
-  };
+  const submit = (values) => {
+     submitProps(values)
+     setVisible(false);
+  } 
+   
   
   const formik = useFormik({
     initialValues: {

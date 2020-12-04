@@ -30,6 +30,23 @@ const App = () => {
     setNotification(notification);
   };
 
+  const submit = async (values) => {
+    const blog = await blogService.addOne(values);
+    if (blog) {
+      notify({
+        type: "success",
+        message: `a new blog ${blog.title} by ${blog.author} added`,
+      });
+      setUpdate(true);
+    } else {
+      notify({
+        type: "error",
+        message: " error creation blog",
+      });
+    }
+     
+  };
+
   const handleLikes = async (id, likes) => {
     await blogService.updateOne(id, likes);
     const blogs = await blogService.getAll();
@@ -99,6 +116,7 @@ const App = () => {
             logged={logged}
             setUpdate={setUpdate}
             setVisible={setVisible}
+            submit={submit}
           />
         )}
       </Toggable>
