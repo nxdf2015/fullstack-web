@@ -28,8 +28,11 @@ if (NODE_ENV == "DEVELOPMENT")
    
 app.use(cors())
 app.use(express.json())
- app.use(extractToken )
- 
+app.use(extractToken )
+if (NODE_ENV === "test"){
+   const   testingController =require('./controller/testing')
+   app.use(testingController)
+}
 
 app.use("/api/blogs" , blogController)
 app.use("/api/users", userController)

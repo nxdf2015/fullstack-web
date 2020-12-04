@@ -21,6 +21,8 @@ router.post('/',validUser , async (req,res)=> {
     res.json(result)
 })
 
+
+
 // router.get("/:username",async (req,resp )=> {
 //     const username =  req.params.username
 
