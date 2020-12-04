@@ -22,7 +22,7 @@ const Details = ({
     </div>
   );
 };
-const Blog = ({ blog, handleLikes, deleteBlog :remove }) => {
+const Blog = ({ blog, handleLikes, deleteBlog :remove,user }) => {
   const [visible, setVisible] = useState(false);
   const deleteBlog = (id) => {
     if(window.confirm(`remove blog ${blog.title}`)){
@@ -38,7 +38,7 @@ const Blog = ({ blog, handleLikes, deleteBlog :remove }) => {
         <div>
           {blog.title} {blog.author}
           <button onClick={() => setVisible(true)}>show</button>{" "}
-          <button onClick={() => deleteBlog(blog.id)}>remove</button>
+         { user === blog.user.name &&  <button onClick={() => deleteBlog(blog.id)}>remove</button> }
         </div>
       )}
     </div>
