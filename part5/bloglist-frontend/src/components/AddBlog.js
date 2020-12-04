@@ -37,8 +37,9 @@ const Add = ({ logged, setUpdate, notify, setVisible, submit : submitProps  }) =
  
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form id="create-form" onSubmit={formik.handleSubmit}>
       <input
+      data-testid="title-form"
         type="text"
         name="title"
         value={formik.values.title}
@@ -47,6 +48,7 @@ const Add = ({ logged, setUpdate, notify, setVisible, submit : submitProps  }) =
       />
       { formik.touched.title && formik.errors.title &&  <div className="error">{   formik.errors.title}</div>}
       <input
+      data-testid="author-form"
         type="text"
         name="author"
         value={formik.values.author}
@@ -55,6 +57,7 @@ const Add = ({ logged, setUpdate, notify, setVisible, submit : submitProps  }) =
       />
        { formik.touched.author && formik.errors.author  &&<div className="error">{  formik.errors.author}</div>}
       <input
+      data-testid="url-form"
         type="text"
         name="url"
         value={formik.values.url}
