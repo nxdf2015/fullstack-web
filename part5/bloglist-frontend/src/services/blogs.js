@@ -22,4 +22,19 @@ const addOne = async (blog) => {
   }
 }
 
-export default { getAll ,addOne }
+
+const updateOne = async  (id,likes) => {
+  const blog  = await client({
+    method:"patch",
+    url:"/blogs/"+id,
+    data:{likes}
+  })
+
+  return blog 
+}
+
+const deleteOne = async (id) => {
+   await client.delete(`blogs/${id}`);
+
+}
+export default { getAll ,addOne ,updateOne ,deleteOne }

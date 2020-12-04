@@ -10,34 +10,43 @@ const validationSchema = yup.object().shape({
   url: yup.string().required("url required").url("should be a valid url"),
 });
 
-const Add = ({ logged , setUpdate ,notify  }) => {
-  const submit = async (values) => {
-      console.log(values)
-    const blog =await  serviceBlog.addOne(values);
-    if (blog){
-     notify({type:"success", message : `a new blog ${blog.title} by ${blog.author} added`})
-     setUpdate(true)}
-     else {
-         notify({
-             type: "error",
-             message:" error creation blog"
-         })
-     }
-  };
+const Add = ({ logged, setUpdate, notify, setVisible }) => {
 
+  
+  const submit = async (values) => {
+    const blog = await serviceBlog.addOne(values);
+    if (blog) {
+      notify({
+        type: "success",
+        message: `a new blog ${blog.title} by ${blog.author} added`,
+      });
+      setUpdate(true);
+    } else {
+      notify({
+        type: "error",
+        message: " error creation blog",
+      });
+    }
+    setVisible(false);
+  };
+  
   const formik = useFormik({
     initialValues: {
       title: "",
       author: "",
       url: "",
     },
-
+  
     onSubmit: submit,
     validationSchema,
   });
-  if (!logged) {
-    return null;
-  }
+
+  const handleCancel = () => {
+    formik.handleReset();
+    setVisible(false);
+  };
+
+ 
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -48,6 +57,7 @@ const Add = ({ logged , setUpdate ,notify  }) => {
         placeholder="title"
         onChange={formik.handleChange}
       />
+      { formik.touched.title && formik.errors.title &&  <div className="error">{   formik.errors.title}</div>}
       <input
         type="text"
         name="author"
@@ -55,6 +65,7 @@ const Add = ({ logged , setUpdate ,notify  }) => {
         placeholder="author"
         onChange={formik.handleChange}
       />
+       { formik.touched.author && formik.errors.author  &&<div className="error">{  formik.errors.author}</div>}
       <input
         type="text"
         name="url"
@@ -62,8 +73,10 @@ const Add = ({ logged , setUpdate ,notify  }) => {
         placeholder="url"
         onChange={formik.handleChange}
       />
-
+      { formik.touched.url && formik.errors.url &&<div className="error">{  formik.errors.url}</div>}
+       
       <input type="submit" value="create" />
+      <button onClick={handleCancel}>cancel</button>
     </form>
   );
 };

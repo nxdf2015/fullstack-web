@@ -5,7 +5,7 @@ import {client} from "./client"
 const getUser = async () => {
     
     const user = await  client.get("/login/me")
-    
+    console.log(user);
     return user.data
    }
   
