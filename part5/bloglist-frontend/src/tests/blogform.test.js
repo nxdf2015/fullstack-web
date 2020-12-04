@@ -38,14 +38,6 @@ describe("create a blog whe user is logged", function(){
 
            })
 
-           
-
-  
-
-           
-        
- 
-
             expect(submit.mock.calls.length).toBe(1)
             expect(submit.mock.calls[0][0]).toMatchObject(blog)
         
