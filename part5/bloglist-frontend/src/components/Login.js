@@ -52,7 +52,7 @@ const Login = ({visible, logged ,notify ,  isLogged}) => {
   return (
     <div>
         <h2>log into application</h2>
-      <form onSubmit={formik.handleSubmit}>
+      <form data-id="login-form" onSubmit={formik.handleSubmit}>
         <div>
             {formik.touched.username && formik.errors.username}
         </div>

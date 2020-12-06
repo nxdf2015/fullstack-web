@@ -37,7 +37,7 @@ const Add = ({ logged, setUpdate, notify, setVisible, submit : submitProps  }) =
  
 
   return (
-    <form id="create-form" onSubmit={formik.handleSubmit}>
+    <form data-id="blog-form" id="create-form" onSubmit={formik.handleSubmit}>
       <input
       data-testid="title-form"
         type="text"

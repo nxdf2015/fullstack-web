@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {v4} from 'uuid'
 import Blog from "./components/Blog";
 import Login from "./components/Login";
 import CreateBlog from "./components/AddBlog";
@@ -27,7 +28,7 @@ const App = () => {
   const [notification, setNotification] = useState({ type: "", message: "" });
 
   const notify = (notification) => {
-    setNotification(notification);
+    setNotification({id: v4() , ... notification});
   };
 
   const submit = async (values) => {
@@ -71,7 +72,7 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, [setBlogs, update]);
+  }, [ update]);
 
   useEffect(() => {
     const getToken = async () => {

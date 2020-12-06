@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react'
 
-const Notification= ({type,message }) => {
+const Notification= ({id, type,message }) => {
     const [visible,setVisible] = useState(false)
-    let id 
+    let idTimeOut
     useEffect(()=> {
      
      setVisible(true)
-    }, [message])
+    }, [id])
+    console.log(message,type)
     if (message === ""){
         return null
     }
     
-    if (id){
-         clearTimeout(id)
-         id=undefined 
+    if (idTimeOut){
+         clearTimeout(idTimeOut)
+         idTimeOut=undefined 
      }
      
-   id = setTimeout(() => setVisible(false),2000)
+   idTimeOut = setTimeout(() => setVisible(false),2000)
       return <div>
           {visible && <div className={`notification ${type}`}>{message}</div>}
       </div>

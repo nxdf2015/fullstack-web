@@ -10,13 +10,14 @@ const Details = ({
   setVisible,
   handleLikes,
 }) => {
+ 
   return (
     <div>
       <div>{title}</div>
       <div>{author}</div>
       <div>{url}</div>
-      <button onClick={() => handleLikes(id, likes + 1)}>likes</button>
-      {likes}
+      <button data-id="btn-likes" onClick={() => handleLikes(id, likes + 1)}>likes</button>
+      <span data-id="likes">{likes}</span>
       <div>{user.name}</div>
       <button onClick={() => setVisible(false)}>hidde</button>
     </div>
@@ -24,6 +25,7 @@ const Details = ({
 };
 const Blog = ({ blog, handleLikes, deleteBlog :remove,user }) => {
   const [visible, setVisible] = useState(false);
+  console.log(blog)
   const deleteBlog = (id) => {
     if(window.confirm(`remove blog ${blog.title}`)){
       remove(id)
