@@ -3,7 +3,7 @@ const express = require('express')
 require("express-async-errors")
 const cors = require('cors')
 const morgan = require("morgan")
-const { NODE_ENV} = require("dotenv")
+const { NODE_ENV} = require("./utils/config")
 
 const {extractToken   } = require("./middleware/token")
 
@@ -29,7 +29,9 @@ if (NODE_ENV == "DEVELOPMENT")
 app.use(cors())
 app.use(express.json())
 app.use(extractToken )
-if (NODE_ENV === "test"){
+
+
+if (NODE_ENV === "TEST"){
    const   testingController =require('./controller/testing')
    app.use(testingController)
 }

@@ -25,7 +25,6 @@ router.get('/', async (request, response) => {
 
 router.post('/' , authorization ,  async  (request, response) => {
   const data = request.body
-
   const blog = await blogServices.create({...data,user : request.token.id })
 
   response.status(200).json(blog)
@@ -46,7 +45,7 @@ router.patch("/:id",authorization , async (request,response) => {
   const id = request.params.id 
  
   const blog = await blogServices.updateOne(id,likes)
-
+   
   response.status(200).json(blog)
 
 })

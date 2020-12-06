@@ -96,13 +96,7 @@ describe("blog app", function () {
     });
 
     it("user can like a blog", function () {
-      // const blog = {
-      //   title: "Type wars",
-      //   author: "Robert C. Martin",
-      //   url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
-
-      // };
-
+      
       cy.contains(`${user.username} logged`);
       cy.contains("add note").click();
       cy.get("[data-id=blog-form]").as("blog-form");
@@ -196,7 +190,7 @@ describe("blog app", function () {
         cy.get("[data-id=container-blogs]")
           .children()
           .then((data) => {
-            console.log(data,"data -----------------")
+           
             const sorted = data
              
               .map((d, i) =>{ i < data.length ? data[i+1].likes > d.likes : true  })

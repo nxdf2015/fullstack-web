@@ -5,8 +5,9 @@ get http://localhost:3003/api/blogs
 
 post http://localhost:3003/api/blogs
 Content-Type: application/json
-
- {"title": "Type wars",
+Authorization: "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InhhdmllciIsImlkIjoiNWZjYzEzY2YyYTE3ZjQxNWQwODM1NWYyIiwiaWF0IjoxNjA3MjExMDkxfQ.0LHzM7COu2BAhQZqmU2j2eAh1PJnmellvNJ6jBPqYRcs"
+ 
+ {"title": "test",
     "author": "Robert C. Martin",
    "url": "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
     "likes": 2}
@@ -23,4 +24,13 @@ patch http://localhost:3003/api/blogs/5f9f440e1575460e3400375d
 Content-Type: application/json
 
 {"likes" : 1}
+
+
+
+####
+
+post http://localhost:3003/api/login
+Content-Type: application/json
+
+{"username":"xavier","password":"xavier"}
 

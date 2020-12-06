@@ -34,7 +34,7 @@ router.post('/',validUser , async (req,res)=> {
 
 router.use((err, req,resp,next) => {
     let  result = []
-    console.log(err.errors,"--------------------------")
+   
     if (err.errors){
         const errors = err.errors
         if(errors.username){
