@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {v4} from 'uuid'
+import { v4 } from "uuid";
 import Blog from "./components/Blog";
 import Login from "./components/Login";
 import CreateBlog from "./components/AddBlog";
@@ -28,7 +28,7 @@ const App = () => {
   const [notification, setNotification] = useState({ type: "", message: "" });
 
   const notify = (notification) => {
-    setNotification({id: v4() , ... notification});
+    setNotification({ id: v4(), ...notification });
   };
 
   const submit = async (values) => {
@@ -38,14 +38,13 @@ const App = () => {
         type: "success",
         message: `a new blog ${blog.title} by ${blog.author} added`,
       });
-      setUpdate(true);
+      blogService.getAll().then((blogs) => setBlogs(blogs));
     } else {
       notify({
         type: "error",
         message: " error creation blog",
       });
     }
-     
   };
 
   const handleLikes = async (id, likes) => {
@@ -54,10 +53,18 @@ const App = () => {
     setBlogs(blogs);
   };
 
-  const deleteBlog = async (id) => {
-    await blogService.deleteOne(id);
-    const blogs = await blogService.getAll();
-    setBlogs(blogs);
+  const deleteBlog = async (blog) => {
+    try {
+      await blogService.deleteOne(blog.id);
+      const blogs = await blogService.getAll();
+      notify({
+        type: "success",
+        message: `delete blog ${blog.title} by ${blog.author}`,
+      });
+      setBlogs(blogs);
+    } catch (error) {
+      notify({ type: "error", message: "can't remove blog" });
+    }
   };
 
   const logUser = (logged) => {
@@ -72,7 +79,7 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, [ update]);
+  }, [update]);
 
   useEffect(() => {
     const getToken = async () => {
@@ -121,10 +128,17 @@ const App = () => {
           />
         )}
       </Toggable>
-
-      {blogs.map((blog) => (
-        <Blog user={user} key={blog.id} blog={blog} handleLikes={handleLikes} deleteBlog={deleteBlog}/>
-      ))}
+      <div data-id="container-blogs">
+        {blogs.map((blog) => (
+          <Blog
+            user={user}
+            key={blog.id}
+            blog={blog}
+            handleLikes={handleLikes}
+            deleteBlog={deleteBlog}
+          />
+        ))}
+      </div>
     </div>
   );
 };

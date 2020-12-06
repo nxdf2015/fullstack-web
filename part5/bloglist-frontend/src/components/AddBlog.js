@@ -23,6 +23,7 @@ const Add = ({ logged, setUpdate, notify, setVisible, submit : submitProps  }) =
       title: "",
       author: "",
       url: "",
+      likes:0,
     },
   
     onSubmit: submit,
@@ -65,7 +66,14 @@ const Add = ({ logged, setUpdate, notify, setVisible, submit : submitProps  }) =
         onChange={formik.handleChange}
       />
       { formik.touched.url && formik.errors.url &&<div className="error">{  formik.errors.url}</div>}
-       
+      <input
+      data-testid="url-form"
+        type="text"
+        name="likes"
+        value={formik.values.likes}
+        placeholder="url"
+        onChange={formik.handleChange}
+      />
       <input type="submit" value="create" />
       <button onClick={handleCancel}>cancel</button>
     </form>
