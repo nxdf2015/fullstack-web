@@ -24,13 +24,14 @@ const App = () => {
   const [logged, isLogged] = useState(false);
   const [blogs, setBlogs] = useBlog();
   const [formVisible, setFormVisible] = useState(false);
-  const [update, setUpdate] = useState(false);
   const [notification, setNotification] = useState({ type: "", message: "" });
 
   const notify = (notification) => {
     setNotification({ id: v4(), ...notification });
   };
-
+  
+  const setUpdate = () =>  blogService.getAll().then((blogs) => setBlogs(blogs));
+  
   const submit = async (values) => {
     const blog = await blogService.addOne(values);
     if (blog) {
@@ -38,7 +39,7 @@ const App = () => {
         type: "success",
         message: `a new blog ${blog.title} by ${blog.author} added`,
       });
-      blogService.getAll().then((blogs) => setBlogs(blogs));
+      setUpdate()
     } else {
       notify({
         type: "error",
@@ -46,7 +47,7 @@ const App = () => {
       });
     }
   };
-
+  
   const handleLikes = async (id, likes) => {
     await blogService.updateOne(id, likes);
     const blogs = await blogService.getAll();
@@ -77,9 +78,7 @@ const App = () => {
     isLogged(false);
   };
 
-  useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, [update]);
+ 
 
   useEffect(() => {
     const getToken = async () => {
