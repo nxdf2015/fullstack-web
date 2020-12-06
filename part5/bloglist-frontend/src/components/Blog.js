@@ -25,7 +25,7 @@ const Details = ({
 };
 const Blog = ({ blog, handleLikes, deleteBlog :remove,user }) => {
   const [visible, setVisible] = useState(false);
-  console.log(blog)
+  
   const deleteBlog = (id) => {
     if(window.confirm(`remove blog ${blog.title}`)){
       remove(id)

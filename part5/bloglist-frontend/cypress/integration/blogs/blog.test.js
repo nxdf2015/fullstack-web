@@ -1,4 +1,6 @@
-const user = { username: "xavier", password: "xavier" };
+const { default: Blog } = require("../../../src/components/Blog");
+
+const user = { name : "xavier" , username: "xavier", password: "xavier" };
 describe("blog app", function () {
   beforeEach(function () {
     cy.request("get", "http://localhost:3003/reset");
@@ -7,9 +9,12 @@ describe("blog app", function () {
   });
 
   describe("test login form", function () {});
+  beforeEach(function(){
+    cy.visit("localhost:3000");
+
+  })
 
   it("the application displays the login form by default", function () {
-    cy.visit("localhost:3000");
     cy.contains(/login/);
   });
 
@@ -60,7 +65,8 @@ describe("blog app", function () {
   });
 
   describe("when logged in", function () {
-    beforeEach(function () {
+    beforeEach(  function () {
+      cy.visit("http://localhost:3000")
       cy.contains("login").click();
       cy.get("[data-id=login-form").as("form");
       cy.get("@form").get("input[name=username").type(user.username);
@@ -83,6 +89,7 @@ describe("blog app", function () {
         cy.get("@blog-form").get(`input[name=${name}]`).type(blog[name]);
       });
       cy.get("@blog-form").get("input[type=submit]").click();
+      cy.contains(`a new blog ${blog.title} by ${blog.author} added`)
 
       cy.get(".blog").should("have.length",1)
       cy.contains("logout").click()
@@ -104,10 +111,13 @@ describe("blog app", function () {
         cy.get("@blog-form").get(`input[name=${name}]`).type(blog[name]);
       });
       cy.get("@blog-form").get("input[type=submit]").click();
+      
+       cy.contains(`a new blog ${blog.title} by ${blog.author} added`)
 
       cy.contains("show").click()
       cy.contains("likes").click()
-
+      
+      cy.get("[data-id=likes]").should("contain",1)
      
 
     })
