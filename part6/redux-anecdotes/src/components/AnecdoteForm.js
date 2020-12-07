@@ -9,6 +9,8 @@ const AnecdoteForm = () => {
         event.preventDefault()
            const note = event.target.note.value
          dispatch(actions.add(note))
+         dispatch(actions.show())
+         setTimeout(() => dispatch(actions.remove()) , 2000)
       }
 return (<form onSubmit={addNote}>
 <div><input  name="note"/></div>

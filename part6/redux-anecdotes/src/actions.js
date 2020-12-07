@@ -1,8 +1,12 @@
 
 
-const vote  = (id) =>  ({ type : "VOTE" , id })
+const vote  = (note) =>  ({ type : "VOTE" , note })
 
 
 const add = (note)=> ({type : "ADD" , note })
 
-export default { vote  ,add }
+const show = () => ({type : "SHOW"})
+
+const remove = () => ({type : "REMOVE"}) 
+
+export default { vote  ,add , show, remove }

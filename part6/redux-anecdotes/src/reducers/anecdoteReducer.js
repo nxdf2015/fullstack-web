@@ -24,9 +24,9 @@ const reducer = (state = initialState, action) => {
   console.log('action', action)
   switch(action.type){
     case "VOTE":
-      const id = action.id
+      const id = action.note.id
       return state.map(obj => obj.id === id ? {...obj ,votes : obj.votes + 1 } : obj )
-      break
+      
     case "ADD":
       return [...state , asObject(action.note) ]
     default:
