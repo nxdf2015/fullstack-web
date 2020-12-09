@@ -9,4 +9,6 @@ const show = () => ({type : "SHOW"})
 
 const remove = () => ({type : "REMOVE"}) 
 
-export default { vote  ,add , show, remove }
+const init = (notes) => ({type : "INIT" , notes })
+
+export default { vote  ,add , show, remove,init  }
